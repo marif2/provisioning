@@ -1,0 +1,19 @@
+
+server:
+  display-name: Provisioning Micro Service
+  address: 0.0.0.0
+  port: 8080
+
+service:
+  jenkins:
+    protocol: "http"
+    hostname: jenkins.wipdios.com
+    port: 8080
+    proxyHostName: 10.102.134.20
+    proxyPort: 8080
+#Custom
+aws:
+  proxy:
+    proxyHost: 10.102.134.20
+    proxyPort: 8080
+    protocol: HTTP
