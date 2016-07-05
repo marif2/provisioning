@@ -4,5 +4,5 @@ Section: misc
 Priority: low
 Architecture: all
 Description: [[description]]
-Maintainer: tcurdt@vafer.org
-Depends: default-jre | java6-runtime
+Maintainer: "Mohammed Arif" <mohd.arif@wipro.com>
+Depends: jarwrapper, java2-runtime | java2-runtime-headless
