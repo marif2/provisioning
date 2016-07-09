@@ -71,6 +71,15 @@
                                         <filemode>755</filemode>
                                     </mapper>
                                 </data>
+                                <data>
+                                  <src>${basedir}/src/deb/init.d/deltaservice</src>
+                                  <type>file</type>
+                                  <mapper>
+                                    <type>perm</type>
+                                    <prefix>/etc/init.d</prefix>
+                                    <filemode>755</filemode>
+                                  </mapper>
+                                </data>
                             </dataSet>
                         </configuration>
                     </execution>
