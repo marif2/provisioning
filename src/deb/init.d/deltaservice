@@ -1,0 +1,2 @@
+#! /bin/sh
+java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar
