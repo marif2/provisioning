@@ -67,7 +67,7 @@
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/bin</prefix>
+                                        <prefix>/apps/delta</prefix>
                                         <filemode>755</filemode>
                                     </mapper>
                                 </data>
