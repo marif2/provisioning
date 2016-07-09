@@ -121,7 +121,7 @@
         <distributionManagement>
     <repository>
         <id>nexus-delta</id>
-        <url>http://jenkins.wipdios.com:8082/nexus/content/repositories/delta/</url>
+        <url>http://jenkins.wipdios.com:8082/nexus/content/repositories/snapshots</url>
     </repository>
     <!-- use the following if you ARE using a snapshot version. -->
     <snapshotRepository>
