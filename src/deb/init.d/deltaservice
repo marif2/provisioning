@@ -24,6 +24,7 @@ then
                 java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
         else
                 jumpto
+                java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
         fi
 else
         jumpto
