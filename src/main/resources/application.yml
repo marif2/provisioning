@@ -9,11 +9,3 @@ service:
     protocol: "http"
     hostname: jenkins.wipdios.com
     port: 8080
-    proxyHostName: 10.102.134.20
-    proxyPort: 8080
-#Custom
-aws:
-  proxy:
-    proxyHost: 10.102.134.20
-    proxyPort: 8080
-    protocol: HTTP
