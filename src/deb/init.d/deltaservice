@@ -7,13 +7,11 @@
 # Default-Stop:      0 1 6
 # Description:       <DESCRIPTION>
 ### END INIT INFO
-
-SCRIPT=java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar
+SCRIPT="java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar"
 RUNAS=root
-
-PIDFILE=/var/run/<NAME>.pid
-LOGFILE=/var/log/<NAME>.log
-
+NAME="delta-service"
+PIDFILE=/var/run/$NAME.pid
+LOGFILE=/var/log/$NAME.log
 start() {
   if [ -f /var/run/$PIDNAME ] && kill -0 $(cat /var/run/$PIDNAME); then
     echo 'Service already running' >&2
@@ -24,7 +22,6 @@ start() {
   su -c "$CMD" $RUNAS > "$PIDFILE"
   echo 'Service started' >&2
 }
-
 stop() {
   if [ ! -f "$PIDFILE" ] || ! kill -0 $(cat "$PIDFILE"); then
     echo 'Service not running' >&2
@@ -34,7 +31,6 @@ stop() {
   kill -15 $(cat "$PIDFILE") && rm -f "$PIDFILE"
   echo 'Service stopped' >&2
 }
-
 uninstall() {
   echo -n "Are you really sure you want to uninstall this service? That cannot be undone. [yes|No] "
   local SURE
@@ -43,7 +39,7 @@ uninstall() {
     stop
     rm -f "$PIDFILE"
     echo "Notice: log file is not be removed: '$LOGFILE'" >&2
-    update-rc.d -f <NAME> remove
+    update-rc.d -f $NAME remove
     rm -fv "$0"
   fi
 }
