@@ -7,7 +7,7 @@
 # Default-Stop:      0 1 6
 # Description:       <DESCRIPTION>
 ### END INIT INFO
-SCRIPT="java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar"
+SCRIPT="java -jar /apps/delta/provisioning-1.0-SNAPSHOT.war"
 RUNAS=root
 NAME="delta-service"
 PIDFILE=/var/run/$NAME.pid
