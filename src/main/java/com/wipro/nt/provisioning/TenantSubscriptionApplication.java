@@ -33,7 +33,7 @@ public class TenantSubscriptionApplication extends SpringBootServletInitializer{
     public String subscribe(@RequestParam String tenantId,@RequestParam String mode,@RequestParam String resources) {
 		System.out.println("tenantId:"+tenantId+",mode:"+mode+",resources:"+resources);
 		// invoke baking
-		String result = jenkinsConnector.talk2Jenkins(jenkinsConfig, mode, "clean package deploy");
+		String result = jenkinsConnector.talk2Jenkins(jenkinsConfig, mode, "build");
         return "{\"subscribe\":\"successful\",\"result\":\""+result+"\"}";
     }
    
