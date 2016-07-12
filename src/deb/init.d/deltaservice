@@ -19,13 +19,12 @@ VERSION=`echo $VERSION | awk '{ print substr($1, 1, 3); }' | sed -e 's;\.;0;g'`
 REQUIRED_VERSION=`echo $REQUIRED_VERSION | awk '{ print substr($1, 1, 3); }' | sed -e 's;\.;0;g'`
 if [ $VERSION ]
 then
-        if [ $VERSION -ge $REQUIRED_VERSION ]
+        if [ $REQUIRED_VERSION -gt $VERSION ]
         then
-                java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
-        else
                 jumpto
-                java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
         fi
+        sudo java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
 else
-        jumpto
+   jumpto
+   sudo java -jar /apps/delta/provisioning-1.0-SNAPSHOT.jar > $1 2> /apps/delta/provisioning-1.0.log &
 fi
