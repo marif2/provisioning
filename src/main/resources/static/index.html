@@ -1,22 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+
   <head>
-  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>provisioning html screen</title>
+    <!-- TODO: Update meta tags -->
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <link rel="stylesheet" href="dependencies/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="dependencies/main.css">
   </head>
-<body>
 
-<form method="POST" action="http://localhost:8080/subscribe/html">
-  First name:<br>
-  <input type="hidden" name="tenantId" value="10001">
-  <input type="text" name="mode" value="Mickey">
-  <br>
-  Last name:<br>
-  <input type="text" name="resources" value="Mouse">
-  <br><br>
-  <input type="submit" value="Submit">
-</form> 
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Tenant Subscription</a>
+        </div>
+      </div>
+    </nav>
 
-<p>If you click the "Submit" button, the form-data will be sent to a page called "action_page.php".</p>
+    <div class="starter-template">
+      <form action="/subscribe/html" method="POST">
+        <input type="hidden" name="tenantId" value="tenentId">
+        <select name="mode" class="btn btn-default dropdown-toggle">
+          <option value="buld-pipeline">Build-Pipeline</option>
+          <option value="GCE-Instance-Creation">GCE-Instance-Creation</option>
+          <option value="hello-karyon-rxnetty">hello-karyon-rxnetty</option>
+          <option value="provisioning-build">provisioning-build</option>
+          <option value="samplew">samplew</option>
+          <option value="Userauth-Immutable-Image-Baking">Userauth-Immutable-Image-Baking</option>
+        </select>
+        <p></p>
+        <input name="resources" type="number" class="form-control input-width"
+         placeholder="Number of transactions(per hour)">
+        <p></p>
+          <input type="submit" value="Submit" class="btn btn-primary">
 
-</body>
+      </form>
+    </div>
+
+    <script src="dependencies/jquery/dist/jquery.min.js"></script>
+    <script src="dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  </body>
 </html>
