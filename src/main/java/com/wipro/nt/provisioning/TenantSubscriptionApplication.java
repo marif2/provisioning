@@ -26,7 +26,7 @@ public class TenantSubscriptionApplication extends SpringBootServletInitializer{
     public String subscribeByJson(@RequestBody Tenant tenant) {
 		System.out.println("tenantId:"+tenant.getTenantId()+",mode:"+tenant.getMode()+",resources:"+tenant.getResources());
 		// calling jenkins rest service for existing job build
-		String result = jenkinsConnector.talk2Jenkins(jenkinsConfig, mode, "build");
+		String result = jenkinsConnector.talk2Jenkins(jenkinsConfig, tenant.getMode(), "build");
 		return "{\"subscribe\":\"successful\",\"result\":\""+result+"\"}";
     }
 	@RequestMapping(value="/html",method = RequestMethod.POST)  
