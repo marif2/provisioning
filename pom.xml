@@ -7,7 +7,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>provisioning</name>
         <description>provisioning micro service</description>
-    	<package>war</package>
+    	<packaging>war</packaging>
 	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
@@ -74,7 +74,7 @@
                             <!-- It's important to use a classifier or the deb artifact will not be indexed by the nexus indexer -->
                             <dataSet>
                                 <data>
-                                    <src>${project.build.directory}/${project.build.finalName}.jar</src>
+                                    <src>${project.build.directory}/${project.build.finalName}.war</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
