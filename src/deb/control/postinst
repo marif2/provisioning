@@ -1,2 +1,2 @@
 #!/bin/sh
-sudo service deltaservice start
+sudo update-rc.d deltaservice defaults
