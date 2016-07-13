@@ -1,10 +1,13 @@
 package com.wipro.nt.provisioning;
 
 
+import org.apache.http.HttpVersion;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -35,30 +38,24 @@ public class JenkinsConnector {
 	RestTemplate createRestTemplate(String username, String password, String host, int port ) {
 	    return new RestTemplate(this.createSecureTransport( username, password, host, port ));
 	}
-	/*
-	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
-		
-	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-	    DefaultHttpClient client = (DefaultHttpClient) requestFactory.getHttpClient();	    
-	   	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
-	    client.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
-	    return requestFactory;
-	    
-	}
-	*/
 	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
 		
 	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 	    // initial/default http params
-	    HttpClient client = requestFactory.getHttpClient();	  
-	    DefaultHttpClient httpclient = new DefaultHttpClient(client.getParams());
+	    HttpParams httpParams = new BasicHttpParams();
+	    HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
+	    HttpConnectionParams.setSoTimeout(httpParams, 1000);
+	    DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
+	    httpClient.getParams().setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
+	    httpClient.getParams().setParameter("http.socket.timeout", new Integer(1000));
+	    httpClient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
+	    
 	    if( host != null && port > 0) {
 		   	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
-		   	httpclient.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
+		   	httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
 	    }
-	    requestFactory.setHttpClient(httpclient);
-	    return requestFactory;
-	    
+	    requestFactory.setHttpClient(httpClient);
+	    return requestFactory;	    
 	}
 	
 	
