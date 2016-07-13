@@ -31,13 +31,14 @@ public class JenkinsConnector {
 	 */
 	public String talk2Jenkins(JenkinsConfig jenkinsConfig,String jobName,String command)
 	{
-		RestTemplate restTemplate = createRestTemplate(jenkinsConfig.getProxyHostname(), jenkinsConfig.getProxyHostname(), jenkinsConfig.getProxyHostname(), jenkinsConfig.getProxyPort());
+		RestTemplate restTemplate = createRestTemplate(jenkinsConfig.getUsername(), jenkinsConfig.getPassword(), jenkinsConfig.getHostname(), jenkinsConfig.getPort());
 		return restTemplate.getForObject(jenkinsConfig.getProtocol()+"://"+jenkinsConfig.getHostname()+ ((jenkinsConfig.getPort()  > 0 && jenkinsConfig.getPort() != 80) ? ":"+ jenkinsConfig.getPort() : "") + "/job/"+jobName+"/"+command, String.class);
 	}
 	
 	RestTemplate createRestTemplate(String username, String password, String host, int port ) {
 	    return new RestTemplate(this.createSecureTransport( username, password, host, port ));
 	}
+	
 	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
 		
 	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
@@ -45,9 +46,11 @@ public class JenkinsConnector {
 	    HttpParams httpParams = new BasicHttpParams();
 	    HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
 	    HttpConnectionParams.setSoTimeout(httpParams, 1000);
+	    
 	    DefaultHttpClient httpClient = new DefaultHttpClient(httpParams);
 	    httpClient.getParams().setParameter("http.protocol.version", HttpVersion.HTTP_1_1);
 	    httpClient.getParams().setParameter("http.socket.timeout", new Integer(1000));
+	    httpClient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
 	    httpClient.getParams().setParameter("http.protocol.content-charset", "UTF-8");
 	    
 	    if( host != null && port > 0) {
@@ -55,12 +58,10 @@ public class JenkinsConnector {
 		   	httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
 	    }
 	    requestFactory.setHttpClient(httpClient);
-	    return requestFactory;	    
+	    return requestFactory;
+	    
 	}
 	
 	
 	
 }
-
-
-
