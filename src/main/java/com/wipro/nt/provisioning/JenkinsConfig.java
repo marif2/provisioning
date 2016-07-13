@@ -8,6 +8,10 @@ import org.springframework.stereotype.Component;
 public class JenkinsConfig {
 	private String protocol;	
 	private String hostname;
+	private String username;
+	private String password;
+	
+
 	private int port;
 	private String proxyHostname;
 	private String proxyUsername;
@@ -68,6 +72,22 @@ public class JenkinsConfig {
 
 	public void setProtocol(String protocol) {
 		this.protocol = protocol;
+	}
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }
