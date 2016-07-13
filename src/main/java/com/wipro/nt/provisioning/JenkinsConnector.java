@@ -1,9 +1,11 @@
 package com.wipro.nt.provisioning;
 
 
+import org.apache.http.HttpHost;
 import org.apache.http.HttpVersion;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -31,15 +33,24 @@ public class JenkinsConnector {
 	 */
 	public String talk2Jenkins(JenkinsConfig jenkinsConfig,String jobName,String command)
 	{
-		RestTemplate restTemplate = createRestTemplate(jenkinsConfig.getUsername(), jenkinsConfig.getPassword(), jenkinsConfig.getHostname(), jenkinsConfig.getPort());
+		RestTemplate restTemplate = createRestTemplate(jenkinsConfig);
 		return restTemplate.getForObject(jenkinsConfig.getProtocol()+"://"+jenkinsConfig.getHostname()+ ((jenkinsConfig.getPort()  > 0 && jenkinsConfig.getPort() != 80) ? ":"+ jenkinsConfig.getPort() : "") + "/job/"+jobName+"/"+command, String.class);
 	}
 	
-	RestTemplate createRestTemplate(String username, String password, String host, int port ) {
-	    return new RestTemplate(this.createSecureTransport( username, password, host, port ));
+	RestTemplate createRestTemplate(JenkinsConfig jenkinsConfig ) {
+	    return new RestTemplate(this.createSecureTransport( jenkinsConfig ));
 	}
-	
-	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
+	private ClientHttpRequestFactory createSecureTransport( JenkinsConfig jenkinsConfig  ){
+		
+		String username = jenkinsConfig.getUsername();
+		String password = jenkinsConfig.getPassword();
+		String host = jenkinsConfig.getHostname(); 
+		int port = jenkinsConfig.getPort();
+		
+		String proxyusername = jenkinsConfig.getProxyUsername();
+		String proxypassword = jenkinsConfig.getProxyPassword();
+		String proxyhost = jenkinsConfig.getProxyHostname();
+		int proxyport = jenkinsConfig.getProxyPort();
 		
 	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 	    // initial/default http params
@@ -57,11 +68,16 @@ public class JenkinsConnector {
 		   	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
 		   	httpClient.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
 	    }
+	    if( proxyhost != null && proxyport > 0) {
+	    	HttpHost proxy = new HttpHost(proxyhost, proxyport);
+	    	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
+		   	httpClient.getCredentialsProvider().setCredentials( new AuthScope( proxyhost, proxyport ), credentials );
+	    	httpClient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
+	    }
+	    
+	    
 	    requestFactory.setHttpClient(httpClient);
 	    return requestFactory;
 	    
 	}
-	
-	
-	
 }
