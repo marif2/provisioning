@@ -34,13 +34,28 @@ public class JenkinsConnector {
 	RestTemplate createRestTemplate(String username, String password, String host, int port ) {
 	    return new RestTemplate(this.createSecureTransport( username, password, host, port ));
 	}
-
+	/*
 	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
 		
 	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
 	    DefaultHttpClient client = (DefaultHttpClient) requestFactory.getHttpClient();	    
 	   	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
 	    client.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
+	    return requestFactory;
+	    
+	}
+	*/
+	private ClientHttpRequestFactory createSecureTransport( String username, String password, String host, int port ){
+		
+	    HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+	    // initial/default http params
+	    HttpClient client = requestFactory.getHttpClient();	  
+	    DefaultHttpClient httpclient = new DefaultHttpClient(client.getParams());
+	    if( host != null && port > 0) {
+		   	UsernamePasswordCredentials credentials = new UsernamePasswordCredentials( username, password );
+		   	httpclient.getCredentialsProvider().setCredentials( new AuthScope( host, port ), credentials );
+	    }
+	    requestFactory.setHttpClient(httpclient);
 	    return requestFactory;
 	    
 	}
