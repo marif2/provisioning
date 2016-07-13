@@ -9,3 +9,5 @@ service:
     protocol: "http"
     hostname: jenkins.wipdios.com
     port: 8080
+    user: arif
+    password: arif
